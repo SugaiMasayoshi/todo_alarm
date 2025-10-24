@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part '../generated/providers/shared_preferences_provider.g.dart';
+part '../generated/repositories/shared_preferences.g.dart';
 
 @Riverpod(keepAlive: true)
 SharedPreferences sharedPreferences(Ref ref) {
