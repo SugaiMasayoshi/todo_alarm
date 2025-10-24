@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/repositories/models/todo_list_model.dart';
-import '../providers/shared_preferences_provider.dart';
+import 'shared_preferences.dart';
 import 'models/todo_item_model.dart';
 
 part '../generated/repositories/todo_repository.g.dart';
