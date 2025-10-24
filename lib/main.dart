@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_alarm/repositories/shared_preferences.dart';
+import 'package:todo_alarm/repositories/shared_preferences_repository.dart';
 import 'package:todo_alarm/routes/app_router.dart';
 
 void main() async {
