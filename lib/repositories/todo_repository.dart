@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:todo_alarm/repositories/local_storage_repository.dart';
 import 'package:todo_alarm/repositories/models/todo_list_model.dart';
-import 'shared_preferences.dart';
 import 'models/todo_item_model.dart';
 
 part '../generated/repositories/todo_repository.g.dart';
@@ -12,8 +12,8 @@ class TodoRepository extends _$TodoRepository {
 
   @override
   TodoListModel build() {
-    final prefs = ref.read(sharedPreferencesProvider);
-    final jsonString = prefs.getString(_todoListKey);
+    final storage = ref.watch(localStorageRepositoryProvider);
+    final jsonString = storage.getString(_todoListKey);
     if (jsonString == null) return TodoListModel();
 
     final Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -22,10 +22,10 @@ class TodoRepository extends _$TodoRepository {
   }
 
   Future<void> _saveTodoList(TodoListModel todoList) async {
-    final prefs = ref.read(sharedPreferencesProvider);
+    final storage = ref.read(localStorageRepositoryProvider);
     final jsonMap = todoList.toJson();
     final jsonString = jsonEncode(jsonMap);
-    await prefs.setString(_todoListKey, jsonString);
+    await storage.setString(_todoListKey, jsonString);
     state = todoList;
   }
 
