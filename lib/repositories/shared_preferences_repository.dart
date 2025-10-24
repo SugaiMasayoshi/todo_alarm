@@ -2,7 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_alarm/repositories/local_storage_repository.dart';
 
-part '../generated/repositories/shared_preferences.g.dart';
+part '../generated/repositories/shared_preferences_repository.g.dart';
 
 @Riverpod(keepAlive: true)
 SharedPreferences sharedPreferences(Ref ref) {
