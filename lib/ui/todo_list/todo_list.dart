@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/ui/todo_list/todo_item.dart';
-import 'package:todo_alarm/ui/todo_list/todo_list_view_mode.dart';
+import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoList extends ConsumerWidget {
   const TodoList({super.key});
@@ -9,7 +9,7 @@ class TodoList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(
-      todoListViewModeProvider.select((state) => state.items),
+      todoListViewModelProvider.select((state) => state.items),
     );
 
     final todoIds = state.keys.toList();

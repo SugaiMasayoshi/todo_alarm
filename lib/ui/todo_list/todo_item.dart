@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/ui/todo_list/todo_item_provider.dart';
-import 'package:todo_alarm/ui/todo_list/todo_list_view_mode.dart';
+import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoItem extends ConsumerWidget {
   const TodoItem({required this.id, super.key});
@@ -21,7 +21,7 @@ class TodoItem extends ConsumerWidget {
       direction: DismissDirection.endToStart,
       background: _buildDismissBackground(context),
       onDismissed: (direction) {
-        ref.read(todoListViewModeProvider.notifier).deleteTodo(todo.id);
+        ref.read(todoListViewModelProvider.notifier).deleteTodo(todo.id);
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

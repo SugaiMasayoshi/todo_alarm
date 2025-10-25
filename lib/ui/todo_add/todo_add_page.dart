@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/ui/todo_list/todo_list_view_mode.dart';
+import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoAddPage extends ConsumerWidget {
   const TodoAddPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoListViewMode = ref.read(todoListViewModeProvider.notifier);
+    final todoListViewModel = ref.read(todoListViewModelProvider.notifier);
     final titleEditingController = TextEditingController();
 
     return Scaffold(
@@ -28,7 +28,7 @@ class TodoAddPage extends ConsumerWidget {
             const Spacer(),
             FilledButton(
               onPressed: () {
-                todoListViewMode.addTodo(title: titleEditingController.text);
+                todoListViewModel.addTodo(title: titleEditingController.text);
                 context.pop();
               },
               child: const Text('追加'),
