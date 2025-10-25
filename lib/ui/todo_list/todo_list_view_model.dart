@@ -4,10 +4,10 @@ import 'package:todo_alarm/repositories/models/todo_list_model.dart';
 import 'package:todo_alarm/repositories/todo_repository.dart';
 import 'package:uuid/uuid.dart';
 
-part '../../generated/ui/todo_list/todo_list_view_mode.g.dart';
+part '../../generated/ui/todo_list/todo_list_view_model.g.dart';
 
 @riverpod
-class TodoListViewMode extends _$TodoListViewMode {
+class TodoListViewModel extends _$TodoListViewModel {
   @override
   TodoListModel build() {
     final todoListState = ref.watch(todoRepositoryProvider);
