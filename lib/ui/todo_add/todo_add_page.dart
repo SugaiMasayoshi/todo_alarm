@@ -28,7 +28,7 @@ class TodoAddPage extends ConsumerWidget {
             const Spacer(),
             FilledButton(
               onPressed: () {
-                todoListViewModel.addTodo(title: titleEditingController.text);
+                todoListViewModel.addTodo(titleEditingController.text);
                 context.pop();
               },
               child: const Text('追加'),
