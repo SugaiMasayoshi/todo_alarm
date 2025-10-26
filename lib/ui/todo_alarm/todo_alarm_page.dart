@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_alarm/routes/router_extension.dart';
+import 'package:todo_alarm/ui/alarm/alarm.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list.dart';
 
 class TodoAlarmPage extends StatelessWidget {
@@ -9,7 +10,13 @@ class TodoAlarmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Mokuhyo-!')),
-      body: const Center(child: TodoList()),
+      body: Column(
+        children: [
+          AlarmDisplay(),
+          SizedBox(height: 20),
+          Expanded(child: TodoList()),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {

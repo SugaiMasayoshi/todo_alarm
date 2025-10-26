@@ -24,8 +24,8 @@ class TodoItem extends ConsumerWidget {
         ref.read(todoListViewModelProvider.notifier).deleteTodo(todo.id);
       },
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        title: Text(todo.title),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        title: Text(todo.title, style: TextStyle(fontSize: 24)),
       ),
     );
   }

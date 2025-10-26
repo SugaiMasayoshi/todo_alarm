@@ -16,7 +16,7 @@ class TodoList extends ConsumerWidget {
 
     return ListView.separated(
       itemCount: todoIds.length,
-      separatorBuilder: (context, index) => const Divider(height: 0),
+      separatorBuilder: (context, index) => const Divider(height: 2),
       itemBuilder: (context, index) {
         final todo = state[todoIds[index]]!;
         return TodoItem(id: todo.id);
