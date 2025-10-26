@@ -18,11 +18,17 @@ GenericLocalStorage<AlarmConfigModel> alarmStorage(Ref ref) {
 }
 
 @riverpod
-class AlarmStorageRepository extends _$AlarmStorageRepository {
-  @override
-  AlarmConfigModel build() {
-    final storage = ref.watch(alarmStorageProvider);
+AlarmStorageRepository alarmStorageRepository(Ref ref) {
+  final storage = ref.watch(alarmStorageProvider);
+  return AlarmStorageRepository(storage);
+}
 
+class AlarmStorageRepository {
+  final GenericLocalStorage<AlarmConfigModel> storage;
+
+  AlarmStorageRepository(this.storage);
+
+  AlarmConfigModel load() {
     return storage.load() ??
         AlarmConfigModel(
           soundSetting: AlarmSoundSettingModel(
@@ -38,8 +44,6 @@ class AlarmStorageRepository extends _$AlarmStorageRepository {
   }
 
   Future<void> save(AlarmConfigModel alarm) async {
-    final storage = ref.read(alarmStorageProvider);
     await storage.save(alarm);
-    state = alarm;
   }
 }

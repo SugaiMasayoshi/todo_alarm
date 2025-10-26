@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/ui/todo_list/todo_item_provider.dart';
+import 'package:todo_alarm/ui/todo_item/todo_item_provider.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoItem extends ConsumerWidget {
