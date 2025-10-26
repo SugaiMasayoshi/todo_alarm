@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/ui/todo_list/todo_item.dart';
+import 'package:todo_alarm/ui/todo_item/todo_item.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoList extends ConsumerWidget {
@@ -16,7 +16,7 @@ class TodoList extends ConsumerWidget {
 
     return ListView.separated(
       itemCount: todoIds.length,
-      separatorBuilder: (context, index) => const Divider(height: 0),
+      separatorBuilder: (context, index) => const Divider(height: 2),
       itemBuilder: (context, index) {
         final todo = state[todoIds[index]]!;
         return TodoItem(id: todo.id);

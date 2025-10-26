@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/ui/todo_list/todo_item_provider.dart';
+import 'package:todo_alarm/ui/todo_item/todo_item_provider.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoItem extends ConsumerWidget {
@@ -24,8 +24,8 @@ class TodoItem extends ConsumerWidget {
         ref.read(todoListViewModelProvider.notifier).deleteTodo(todo.id);
       },
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        title: Text(todo.title),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        title: Text(todo.title, style: TextStyle(fontSize: 24)),
       ),
     );
   }

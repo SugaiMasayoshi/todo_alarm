@@ -16,17 +16,21 @@ GenericLocalStorage<TodoListModel> todoListStorage(Ref ref) {
 }
 
 @riverpod
-class TodoListRepository extends _$TodoListRepository {
-  @override
-  TodoListModel build() {
-    final storage = ref.watch(todoListStorageProvider);
+TodoListRepository todoListRepository(Ref ref) {
+  final storage = ref.watch(todoListStorageProvider);
+  return TodoListRepository(storage);
+}
 
+class TodoListRepository {
+  final GenericLocalStorage<TodoListModel> storage;
+
+  TodoListRepository(this.storage);
+
+  TodoListModel load() {
     return storage.load() ?? TodoListModel();
   }
 
   Future<void> save(TodoListModel todoList) async {
-    final storage = ref.read(todoListStorageProvider);
     await storage.save(todoList);
-    state = todoList;
   }
 }

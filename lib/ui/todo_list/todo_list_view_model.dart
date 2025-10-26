@@ -8,10 +8,12 @@ part '../../generated/ui/todo_list/todo_list_view_model.g.dart';
 
 @riverpod
 class TodoListViewModel extends _$TodoListViewModel {
+  late final TodoListRepository _repository;
+
   @override
   TodoListModel build() {
-    final todoListState = ref.watch(todoListRepositoryProvider);
-    return todoListState;
+    _repository = ref.watch(todoListRepositoryProvider);
+    return _repository.load();
   }
 
   Future<void> addTodo(String title) async {
@@ -23,25 +25,26 @@ class TodoListViewModel extends _$TodoListViewModel {
 
     final newItems = Map<String, TodoItemModel>.from(state.items)
       ..[todo.id] = todo;
+    final newState = state.copyWith(items: newItems);
 
-    await ref
-        .read(todoListRepositoryProvider.notifier)
-        .save(state.copyWith(items: newItems));
+    await _repository.save(newState);
+    state = newState;
   }
 
-  // 存在していないTodoを更新しようとした場合は追加されます
   Future<void> updateTodo(TodoItemModel updatedTodo) async {
     final newItems = Map<String, TodoItemModel>.from(state.items)
       ..[updatedTodo.id] = updatedTodo;
+    final newState = state.copyWith(items: newItems);
 
-    await ref
-        .read(todoListRepositoryProvider.notifier)
-        .save(state.copyWith(items: newItems));
+    await _repository.save(newState);
+    state = newState;
   }
 
   Future<void> deleteTodo(String id) async {
-    await ref
-        .read(todoListRepositoryProvider.notifier)
-        .save(state.copyWith(items: {...state.items}..remove(id)));
+    final newItems = Map<String, TodoItemModel>.from(state.items)..remove(id);
+    final newState = state.copyWith(items: newItems);
+
+    await _repository.save(newState);
+    state = newState;
   }
 }
