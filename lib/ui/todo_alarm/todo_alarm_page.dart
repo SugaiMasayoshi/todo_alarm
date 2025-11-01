@@ -9,7 +9,17 @@ class TodoAlarmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mokuhyo-!')),
+      appBar: AppBar(
+        title: const Text('Mokuhyo-!'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.goToSpeech();
+            },
+            icon: Icon(Icons.mic),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           AlarmDisplay(),

@@ -14,7 +14,7 @@ class AlarmPluginRepository implements IAlarmRepository {
       alarmSettings: AlarmSettings(
         id: id,
         dateTime: alarm.dateTime,
-        assetAudioPath: 'assets/alarm.mp3',
+        assetAudioPath: 'assets/sounds/alarm.mp3',
         loopAudio: true,
         vibrate: true,
         warningNotificationOnKill: Platform.isIOS,

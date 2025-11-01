@@ -5,4 +5,5 @@ import 'app_router.dart';
 extension GoRouterExtension on BuildContext {
   void goToTodoAlarm() => goNamed(RouteName.todoAlarm);
   void goToTodoAdd() => goNamed(RouteName.todoAdd);
+  void goToSpeech() => goNamed(RouteName.speech);
 }

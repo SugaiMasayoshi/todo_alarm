@@ -46,3 +46,6 @@ app.*.map.json
 
 # generated files
 lib/generated/
+
+# assets
+assets/
