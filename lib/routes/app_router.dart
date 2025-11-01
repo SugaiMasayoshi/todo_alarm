@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:todo_alarm/ui/speech/speech_page.dart';
 import 'package:todo_alarm/ui/todo_add/todo_add_page.dart';
 import 'package:todo_alarm/ui/todo_alarm/todo_alarm_page.dart';
 
@@ -23,6 +24,11 @@ GoRouter appRouter(Ref ref) {
             name: RouteName.todoAdd,
             builder: (context, state) => const TodoAddPage(),
           ),
+          GoRoute(
+            path: '/speech',
+            name: RouteName.speech,
+            builder: (context, state) => const SpeechPage(),
+          ),
         ],
       ),
     ],
@@ -38,4 +44,5 @@ class RouteName {
 
   static const String todoAlarm = 'todo_alarm';
   static const String todoAdd = 'todo_add';
+  static const String speech = 'speech';
 }

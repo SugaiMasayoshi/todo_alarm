@@ -10,9 +10,9 @@ class TodoItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todo = ref.watch(todoItemProvider(id));
+    final state = ref.watch(todoItemProvider(id));
 
-    if (todo == null) {
+    if (state == null) {
       return const SizedBox.shrink();
     }
 
@@ -21,11 +21,11 @@ class TodoItem extends ConsumerWidget {
       direction: DismissDirection.endToStart,
       background: _buildDismissBackground(context),
       onDismissed: (direction) {
-        ref.read(todoListViewModelProvider.notifier).deleteTodo(todo.id);
+        ref.read(todoListViewModelProvider.notifier).deleteTodo(state.id);
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        title: Text(todo.title, style: TextStyle(fontSize: 24)),
+        title: Text(state.title, style: TextStyle(fontSize: 24)),
       ),
     );
   }

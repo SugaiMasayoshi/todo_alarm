@@ -33,9 +33,10 @@ class GenericLocalStorage<T> {
     final jsonString = _storage.getString(key);
     if (jsonString == null) return null;
 
-    final Map<String, dynamic> jsonMap = Map<String, dynamic>.from(
-      jsonDecode(jsonString),
-    );
+    final decoded = jsonDecode(jsonString);
+    if (decoded is! Map<String, dynamic>) return null;
+
+    final Map<String, dynamic> jsonMap = Map<String, dynamic>.from(decoded);
     return fromJson(jsonMap);
   }
 
