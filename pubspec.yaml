@@ -32,9 +32,6 @@ dev_dependencies:
 
 
 flutter:
-  platforms:
-    android: true
-    ios: true
   uses-material-design: true
   assets:
     - assets/sounds/
