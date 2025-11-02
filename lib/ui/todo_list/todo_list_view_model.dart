@@ -47,4 +47,22 @@ class TodoListViewModel extends _$TodoListViewModel {
     await _repository.save(newState);
     state = newState;
   }
+
+  Future<void> reorderTodos(int oldIndex, int newIndex) async {
+    final todoIds = state.items.keys.toList();
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final movedId = todoIds.removeAt(oldIndex);
+    todoIds.insert(newIndex, movedId);
+
+    final newItems = <String, TodoItemModel>{};
+    for (final id in todoIds) {
+      newItems[id] = state.items[id]!;
+    }
+    final newState = state.copyWith(items: newItems);
+
+    await _repository.save(newState);
+    state = newState;
+  }
 }
