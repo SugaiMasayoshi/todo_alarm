@@ -4,9 +4,10 @@ import 'package:todo_alarm/ui/todo_item/todo_item_provider.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoItem extends ConsumerWidget {
-  const TodoItem({required this.id, super.key});
+  const TodoItem({required this.id, required this.index, super.key});
 
   final String id;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,6 +26,10 @@ class TodoItem extends ConsumerWidget {
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        trailing: ReorderableDragStartListener(
+          index: index,
+          child: const Icon(Icons.drag_handle, color: Colors.grey),
+        ),
         title: Text(state.title, style: TextStyle(fontSize: 24)),
       ),
     );

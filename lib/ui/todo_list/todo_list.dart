@@ -14,12 +14,22 @@ class TodoList extends ConsumerWidget {
 
     final todoIds = state.keys.toList();
 
-    return ListView.separated(
-      itemCount: todoIds.length,
-      separatorBuilder: (context, index) => const Divider(height: 2),
+    return ReorderableListView.builder(
       itemBuilder: (context, index) {
         final todo = state[todoIds[index]]!;
-        return TodoItem(id: todo.id);
+        return Column(
+          key: ValueKey(todo.id),
+          children: [
+            TodoItem(id: todo.id, index: index),
+            const Divider(height: 0),
+          ],
+        );
+      },
+      itemCount: todoIds.length,
+      onReorder: (int oldIndex, int newIndex) {
+        ref
+            .read(todoListViewModelProvider.notifier)
+            .reorderTodos(oldIndex, newIndex);
       },
     );
   }
