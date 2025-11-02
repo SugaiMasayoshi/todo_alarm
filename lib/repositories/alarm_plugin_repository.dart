@@ -9,11 +9,33 @@ class AlarmPluginRepository implements IAlarmRepository {
   final int id = 1;
 
   @override
-  Future<void> set(AlarmModel alarm) {
-    return Alarm.set(
+  Future<void> set(AlarmModel alarm) async {
+    // 既存のアラームを停止してから新しいアラームをセット
+    await Alarm.stop(id);
+
+    // 過去の時刻の場合は翌日に設定
+    var alarmDateTime = alarm.dateTime;
+    final now = DateTime.now();
+
+    if (alarmDateTime.isBefore(now)) {
+      // 今日の指定時刻が過ぎている場合は翌日に設定
+      alarmDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        alarmDateTime.hour,
+        alarmDateTime.minute,
+      ).add(const Duration(days: 1));
+
+      print(
+        '⏰ Alarm time is in the past. Setting for tomorrow: $alarmDateTime',
+      );
+    }
+
+    await Alarm.set(
       alarmSettings: AlarmSettings(
         id: id,
-        dateTime: alarm.dateTime,
+        dateTime: alarmDateTime,
         assetAudioPath: 'assets/sounds/alarm.mp3',
         loopAudio: true,
         vibrate: true,
