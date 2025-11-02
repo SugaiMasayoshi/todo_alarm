@@ -12,11 +12,9 @@ class TodoList extends ConsumerWidget {
       todoListViewModelProvider.select((state) => state.items),
     );
 
-    final todoIds = state.keys.toList();
-
     return ReorderableListView.builder(
       itemBuilder: (context, index) {
-        final todo = state[todoIds[index]]!;
+        final todo = state[index];
         return Column(
           key: ValueKey(todo.id),
           children: [
@@ -25,7 +23,7 @@ class TodoList extends ConsumerWidget {
           ],
         );
       },
-      itemCount: todoIds.length,
+      itemCount: state.length,
       onReorder: (int oldIndex, int newIndex) {
         ref
             .read(todoListViewModelProvider.notifier)

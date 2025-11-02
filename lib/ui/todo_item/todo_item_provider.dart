@@ -8,7 +8,9 @@ part '../../generated/ui/todo_item/todo_item_provider.g.dart';
 @riverpod
 TodoItemModel? todoItem(Ref ref, String id) {
   final state = ref.watch(
-    todoListViewModelProvider.select((value) => value.items[id]),
+    todoListViewModelProvider.select(
+      (value) => value.items.firstWhere((item) => item.id == id),
+    ),
   );
   return state;
 }

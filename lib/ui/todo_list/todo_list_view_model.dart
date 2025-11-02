@@ -23,8 +23,7 @@ class TodoListViewModel extends _$TodoListViewModel {
       status: TodoStatus.todo,
     );
 
-    final newItems = Map<String, TodoItemModel>.from(state.items)
-      ..[todo.id] = todo;
+    final newItems = [...state.items, todo];
     final newState = state.copyWith(items: newItems);
 
     await _repository.save(newState);
@@ -32,8 +31,9 @@ class TodoListViewModel extends _$TodoListViewModel {
   }
 
   Future<void> updateTodo(TodoItemModel updatedTodo) async {
-    final newItems = Map<String, TodoItemModel>.from(state.items)
-      ..[updatedTodo.id] = updatedTodo;
+    final newItems = [...state.items];
+    newItems[state.items.indexWhere((item) => item.id == updatedTodo.id)] =
+        updatedTodo;
     final newState = state.copyWith(items: newItems);
 
     await _repository.save(newState);
@@ -41,7 +41,7 @@ class TodoListViewModel extends _$TodoListViewModel {
   }
 
   Future<void> deleteTodo(String id) async {
-    final newItems = Map<String, TodoItemModel>.from(state.items)..remove(id);
+    final newItems = [...state.items]..removeWhere((item) => item.id == id);
     final newState = state.copyWith(items: newItems);
 
     await _repository.save(newState);
@@ -49,18 +49,15 @@ class TodoListViewModel extends _$TodoListViewModel {
   }
 
   Future<void> reorderTodos(int oldIndex, int newIndex) async {
-    final todoIds = state.items.keys.toList();
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final movedId = todoIds.removeAt(oldIndex);
-    todoIds.insert(newIndex, movedId);
+    final movedItem = state.items[oldIndex];
+    final newItems = [...state.items]
+      ..removeAt(oldIndex)
+      ..insert(newIndex, movedItem);
 
-    final newItems = <String, TodoItemModel>{};
-    for (final id in todoIds) {
-      newItems[id] = state.items[id]!;
-    }
-    final newState = state.copyWith(items: newItems);
+    final newState = TodoListModel(items: newItems);
 
     await _repository.save(newState);
     state = newState;

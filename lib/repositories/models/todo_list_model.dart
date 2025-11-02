@@ -6,7 +6,7 @@ part '../../generated/repositories/models/todo_list_model.g.dart';
 
 @freezed
 abstract class TodoListModel with _$TodoListModel {
-  const factory TodoListModel({@Default({}) Map<String, TodoItemModel> items}) =
+  const factory TodoListModel({@Default([]) List<TodoItemModel> items}) =
       _TodoListModel;
 
   factory TodoListModel.fromJson(Map<String, dynamic> json) =>

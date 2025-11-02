@@ -3,7 +3,6 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 part '../generated/repositories/speech_to_text_repository.g.dart';
 
-// Repository の抽象インターフェース
 abstract class ISpeechToTextRepository {
   Future<bool> initialize();
   Future<void> startListening({
@@ -15,7 +14,6 @@ abstract class ISpeechToTextRepository {
   bool isAvailable();
 }
 
-// Repository の実装（Provider でシングルトン化される）
 @Riverpod(keepAlive: true)
 ISpeechToTextRepository speechToTextRepository(Ref ref) {
   return SpeechToTextRepository();
