@@ -32,7 +32,7 @@ class AlarmStorageRepository {
     return storage.load() ??
         AlarmConfigModel(
           soundSetting: AlarmSoundSettingModel(
-            assetAudioPath: "assets/audios/bell.mp3",
+            assetAudioPath: "assets/sounds/alarm.mp3",
             volume: 0.3,
             vibrate: true,
           ),

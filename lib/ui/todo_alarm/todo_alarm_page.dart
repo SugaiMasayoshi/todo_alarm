@@ -10,7 +10,7 @@ class TodoAlarmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mokuhyo-!'),
+        title: Image.asset('assets/images/appbar_logo.png', height: 40),
         actions: [
           IconButton(
             onPressed: () {

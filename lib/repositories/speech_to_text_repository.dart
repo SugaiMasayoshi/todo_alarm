@@ -4,7 +4,10 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 part '../generated/repositories/speech_to_text_repository.g.dart';
 
 abstract class ISpeechToTextRepository {
-  Future<bool> initialize();
+  Future<bool> initialize({
+    Function(String)? onStatus,
+    Function(String)? onError,
+  });
   Future<void> startListening({
     required Function(String) onResult,
     String? localeId,
@@ -14,20 +17,34 @@ abstract class ISpeechToTextRepository {
   bool isAvailable();
 }
 
-@Riverpod(keepAlive: true)
+@riverpod
 ISpeechToTextRepository speechToTextRepository(Ref ref) {
-  return SpeechToTextRepository();
+  final stt.SpeechToText speechToText = stt.SpeechToText();
+  final repository = SpeechToTextRepository(speechToText);
+
+  return repository;
 }
 
 class SpeechToTextRepository implements ISpeechToTextRepository {
-  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  final stt.SpeechToText _speechToText;
+
+  SpeechToTextRepository(this._speechToText);
 
   @override
-  Future<bool> initialize() async {
+  Future<bool> initialize({
+    Function(String)? onStatus,
+    Function(String)? onError,
+  }) async {
     try {
       return await _speechToText.initialize(
-        onError: (error) => throw Exception('音声認識エラー: ${error.errorMsg}'),
-        onStatus: (status) => print('音声認識ステータス: $status'),
+        onStatus: (status) {
+          print('音声認識ステータス: $status');
+          onStatus?.call(status);
+        },
+        onError: (error) {
+          print('音声認識エラー: ${error.errorMsg}');
+          onError?.call(error.errorMsg);
+        },
       );
     } catch (e) {
       print('初期化エラー: $e');
@@ -50,6 +67,8 @@ class SpeechToTextRepository implements ISpeechToTextRepository {
           onResult(result.recognizedWords);
         }
       },
+      listenFor: const Duration(seconds: 30),
+      pauseFor: const Duration(seconds: 5),
       localeId: localeId ?? 'ja_JP',
     );
   }
