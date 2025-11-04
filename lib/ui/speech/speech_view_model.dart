@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/speech_to_text_repository.dart';
+import 'package:todo_alarm/repositories/todo_list_repository.dart';
 import 'package:todo_alarm/ui/speech/speech_state.dart';
 
 part '../../generated/ui/speech/speech_view_model.g.dart';
@@ -21,6 +23,8 @@ class SpeechViewModel extends _$SpeechViewModel {
           if (status == 'notListening' || status == 'done') {
             state = state.copyWith(isListening: false);
           }
+
+          _stopAlarm();
         },
         onError: (errorMsg) {
           print('❌ 音声認識エラー: $errorMsg');
@@ -90,5 +94,22 @@ class SpeechViewModel extends _$SpeechViewModel {
 
   void clearError() {
     state = state.copyWith(errorMessage: null);
+  }
+
+  void _stopAlarm() async {
+    print('🔍 認識されたテキスト: ${state.recognizedText}');
+    final todoListRepository = ref.read(todoListRepositoryProvider);
+    final todoList = todoListRepository.load();
+    final firstItem = todoList.items.first;
+    if (state.recognizedText.contains(firstItem.title)) {
+      ref.read(alarmRepositoryProvider).stop();
+    }
+    clearText();
+  }
+
+  // Todo: 読み上げられた文字と目標のマッチングロジックを追加する
+
+  void _matchRecognizedTextWithGoals() {
+    // ここにマッチングロジックを実装
   }
 }
