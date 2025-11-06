@@ -98,18 +98,65 @@ class SpeechViewModel extends _$SpeechViewModel {
 
   void _stopAlarm() async {
     print('🔍 認識されたテキスト: ${state.recognizedText}');
-    final todoListRepository = ref.read(todoListRepositoryProvider);
-    final todoList = todoListRepository.load();
-    final firstItem = todoList.items.first;
-    if (state.recognizedText.contains(firstItem.title)) {
-      ref.read(alarmRepositoryProvider).stop();
-    }
+    _matchRecognizedTextWithGoals();
     clearText();
   }
 
-  // Todo: 読み上げられた文字と目標のマッチングロジックを追加する
-
   void _matchRecognizedTextWithGoals() {
-    // ここにマッチングロジックを実装
+    const double threshold = 0.4;
+
+    final recognized = state.recognizedText.trim().toLowerCase();
+    if (recognized.isEmpty) return;
+
+    final todoListRepository = ref.read(todoListRepositoryProvider);
+    final todoList = todoListRepository.load();
+
+    if (todoList.items.isEmpty) return;
+
+    final first = todoList.items.first;
+    final title = first.title.trim().toLowerCase();
+    if (title.isEmpty) return;
+
+    final matchedCount = _longestCommonSubsequenceLength(recognized, title);
+    final ratio =
+        matchedCount * 2 / title.runes.length + recognized.runes.length;
+
+    print(
+      '🔎 比較(先頭のみ, LCSベース): "$title" / matched=$matchedCount ratio=${ratio.toStringAsFixed(2)}',
+    );
+
+    if (ratio >= threshold) {
+      print(
+        '✅ 先頭 todo にマッチ: ${first.title} (ratio=${ratio.toStringAsFixed(2)}) -> アラーム停止',
+      );
+      ref.read(alarmRepositoryProvider).stop();
+    } else {
+      print('❌ 先頭 todo とマッチせず (ratio=${ratio.toStringAsFixed(2)})');
+    }
+  }
+
+  int _longestCommonSubsequenceLength(String s1, String s2) {
+    final a = s1.runes.toList();
+    final b = s2.runes.toList();
+    final n = a.length;
+    final m = b.length;
+    if (n == 0 || m == 0) return 0;
+
+    List<int> prev = List.filled(m + 1, 0);
+    List<int> cur = List.filled(m + 1, 0);
+
+    for (int i = 1; i <= n; i++) {
+      for (int j = 1; j <= m; j++) {
+        if (a[i - 1] == b[j - 1]) {
+          cur[j] = prev[j - 1] + 1;
+        } else {
+          cur[j] = prev[j] > cur[j - 1] ? prev[j] : cur[j - 1];
+        }
+      }
+      prev = cur;
+      cur = List.filled(m + 1, 0);
+    }
+
+    return prev[m];
   }
 }
