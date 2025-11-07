@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/speech_to_text_repository.dart';
 import 'package:todo_alarm/repositories/todo_list_repository.dart';
+import 'package:todo_alarm/routes/app_router.dart';
 import 'package:todo_alarm/ui/speech/speech_state.dart';
 
 part '../../generated/ui/speech/speech_view_model.g.dart';
@@ -99,11 +100,13 @@ class SpeechViewModel extends _$SpeechViewModel {
   void _stopAlarm() async {
     print('🔍 認識されたテキスト: ${state.recognizedText}');
     _matchRecognizedTextWithGoals();
-    clearText();
+    Future.delayed(Duration(seconds: 3), () {
+      clearText();
+    });
   }
 
   void _matchRecognizedTextWithGoals() {
-    const double threshold = 0.4;
+    const double threshold = 0.5;
 
     final recognized = state.recognizedText.trim().toLowerCase();
     if (recognized.isEmpty) return;
@@ -118,8 +121,9 @@ class SpeechViewModel extends _$SpeechViewModel {
     if (title.isEmpty) return;
 
     final matchedCount = _longestCommonSubsequenceLength(recognized, title);
-    final ratio =
-        matchedCount * 2 / title.runes.length + recognized.runes.length;
+
+    final totalLength = title.runes.length + recognized.runes.length;
+    final ratio = totalLength == 0 ? 0.0 : (matchedCount * 2) / totalLength;
 
     print(
       '🔎 比較(先頭のみ, LCSベース): "$title" / matched=$matchedCount ratio=${ratio.toStringAsFixed(2)}',
@@ -130,6 +134,8 @@ class SpeechViewModel extends _$SpeechViewModel {
         '✅ 先頭 todo にマッチ: ${first.title} (ratio=${ratio.toStringAsFixed(2)}) -> アラーム停止',
       );
       ref.read(alarmRepositoryProvider).stop();
+      final router = ref.read(appRouterProvider);
+      router.pop();
     } else {
       print('❌ 先頭 todo とマッチせず (ratio=${ratio.toStringAsFixed(2)})');
     }

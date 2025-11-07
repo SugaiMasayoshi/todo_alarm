@@ -1,9 +1,15 @@
 import 'dart:io';
 
 import 'package:alarm/alarm.dart';
+import 'package:alarm/utils/alarm_set.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/models/alarm_model.dart';
+
+final alarmRingingStreamProvider = StreamProvider<AlarmSet>((ref) {
+  return Alarm.ringing;
+});
 
 class AlarmPluginRepository implements IAlarmRepository {
   final int id = 1;

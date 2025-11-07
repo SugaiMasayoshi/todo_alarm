@@ -19,14 +19,17 @@ class SpeechPage extends ConsumerWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Speech Page')),
+      appBar: AppBar(title: const Text('アラーム停止')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '今日やることは「${todo?.title ?? "目標を設定"}」です',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                '今日やることは「${todo?.title ?? "目標を設定"}」です',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
             SizedBox(height: 20),
             Text(
