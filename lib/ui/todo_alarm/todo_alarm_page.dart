@@ -10,7 +10,19 @@ class TodoAlarmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
+        leading: IconButton(
+          onPressed: () {
+            showLicensePage(
+              context: context,
+              applicationIcon: SizedBox(
+                width: 128,
+                height: 128,
+                child: Image.asset('assets/launcher_icon/icon_adaptive.png'),
+              ),
+            );
+          },
+          icon: Icon(Icons.info),
+        ),
         title: Center(
           child: Image.asset('assets/images/app_banner.png', height: 40),
         ),

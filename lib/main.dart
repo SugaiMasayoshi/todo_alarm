@@ -12,7 +12,7 @@ void main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   await Alarm.init();
 
-  final openSpeechOnLaunch = await _shouldOpenSpeechOnLaunch();
+  final openSpeechOnLaunch = await Alarm.isRinging();
 
   runApp(
     ProviderScope(
@@ -57,13 +57,5 @@ class MainApp extends ConsumerWidget {
         useMaterial3: true,
       ),
     );
-  }
-}
-
-Future<bool> _shouldOpenSpeechOnLaunch() async {
-  try {
-    return await Alarm.isRinging();
-  } catch (_) {
-    return false;
   }
 }
