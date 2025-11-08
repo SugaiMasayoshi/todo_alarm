@@ -34,6 +34,9 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AsyncValue<AlarmSet>>(alarmRingingStreamProvider, (_, next) {
       next.whenData((event) {
+        if (event.alarms.isEmpty) {
+          return;
+        }
         final router = ref.read(appRouterProvider);
         router.goNamed(RouteName.speech);
       });

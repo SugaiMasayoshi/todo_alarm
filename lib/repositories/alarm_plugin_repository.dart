@@ -16,8 +16,8 @@ class AlarmPluginRepository implements IAlarmRepository {
 
   @override
   Future<void> set(AlarmConfigModel alarmConfig) async {
-    await Alarm.stop(id);
-
+    // Alarm.set already replaces alarms with the same id or scheduled time, so
+    // calling stop beforehand can surface platform errors when nothing is active.
     var alarmDateTime = alarmConfig.alarm.dateTime;
     final now = DateTime.now();
 

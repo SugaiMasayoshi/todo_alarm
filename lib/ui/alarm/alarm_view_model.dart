@@ -22,7 +22,7 @@ class AlarmViewModel extends _$AlarmViewModel {
   }
 
   Future<void> setAlarm(AlarmConfigModel config) async {
-    await ref.read(alarmRepositoryProvider).set(config.alarm);
+    await ref.read(alarmRepositoryProvider).set(config);
     await ref.read(alarmStorageRepositoryProvider).save(config);
     state = config;
   }
