@@ -5,7 +5,7 @@ import 'package:alarm/utils/alarm_set.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/repositories/alarm_repository.dart';
-import 'package:todo_alarm/repositories/models/alarm_model.dart';
+import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
 
 final alarmRingingStreamProvider = StreamProvider<AlarmSet>((ref) {
   return Alarm.ringing;
@@ -15,10 +15,10 @@ class AlarmPluginRepository implements IAlarmRepository {
   final int id = 1;
 
   @override
-  Future<void> set(AlarmModel alarm) async {
+  Future<void> set(AlarmConfigModel alarmConfig) async {
     await Alarm.stop(id);
 
-    var alarmDateTime = alarm.dateTime;
+    var alarmDateTime = alarmConfig.alarm.dateTime;
     final now = DateTime.now();
 
     if (alarmDateTime.isBefore(now)) {
@@ -41,17 +41,17 @@ class AlarmPluginRepository implements IAlarmRepository {
         dateTime: alarmDateTime,
         assetAudioPath: 'assets/sounds/alarm.mp3',
         loopAudio: true,
-        vibrate: true,
+        vibrate: alarmConfig.soundSetting.vibrate,
         warningNotificationOnKill: Platform.isIOS,
         androidFullScreenIntent: true,
         volumeSettings: VolumeSettings.fade(
-          volume: 0.8,
+          volume: alarmConfig.soundSetting.volume,
           fadeDuration: Duration(seconds: 5),
           volumeEnforced: true,
         ),
         notificationSettings: NotificationSettings(
           title: '今日の目標を達成しましょう！',
-          body: alarm.title,
+          body: alarmConfig.alarm.title,
           icon: 'notification_icon',
           iconColor: Colors.blue,
         ),

@@ -1,4 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:todo_alarm/repositories/alarm_repository.dart';
+import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
+import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
 import 'package:todo_alarm/repositories/models/settings_model.dart';
 import 'package:todo_alarm/repositories/settings_storage_repository.dart';
 
@@ -12,8 +15,23 @@ class SettingsViewModel extends _$SettingsViewModel {
     return storage.load() ?? SettingsModel();
   }
 
+  Future<void> setAlarm(AlarmConfigModel config) async {
+    await ref.read(alarmRepositoryProvider).set(config.alarm);
+    await ref.read(alarmStorageRepositoryProvider).save(config);
+  }
+
   Future<void> saveSettings(SettingsModel settings) async {
     final storage = ref.watch(settingsStorageRepositoryProvider);
+    final alarmConfig = ref.read(alarmStorageRepositoryProvider).load();
+
+    final newAlarmConfig = alarmConfig.copyWith(
+      soundSetting: alarmConfig.soundSetting.copyWith(
+        volume: settings.alarmVolume,
+        vibrate: settings.vibrateOnAlarm,
+      ),
+    );
+
+    await setAlarm(newAlarmConfig);
     await storage.save(settings);
     state = settings;
   }

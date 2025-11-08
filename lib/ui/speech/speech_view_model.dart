@@ -3,6 +3,7 @@ import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/speech_to_text_repository.dart';
 import 'package:todo_alarm/repositories/todo_list_repository.dart';
 import 'package:todo_alarm/routes/app_router.dart';
+import 'package:todo_alarm/ui/setting/settings_viewmodel.dart';
 import 'package:todo_alarm/ui/speech/speech_state.dart';
 
 part '../../generated/ui/speech/speech_view_model.g.dart';
@@ -106,7 +107,7 @@ class SpeechViewModel extends _$SpeechViewModel {
   }
 
   void _matchRecognizedTextWithGoals() {
-    const double threshold = 0.5;
+    final threshold = ref.read(settingsViewModelProvider).speechSensitivity;
 
     final recognized = state.recognizedText.trim().toLowerCase();
     if (recognized.isEmpty) return;

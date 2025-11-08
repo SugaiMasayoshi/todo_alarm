@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/repositories/settings_storage_repository.dart';
 import 'package:todo_alarm/ui/setting/settings_viewmodel.dart';
 
 class SettingsPage extends ConsumerWidget {

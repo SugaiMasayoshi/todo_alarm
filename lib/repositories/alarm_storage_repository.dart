@@ -29,12 +29,11 @@ class AlarmStorageRepository {
   AlarmStorageRepository(this.storage);
 
   AlarmConfigModel load() {
-    // Todo: 設定がない場合のデフォルト値を共通化
     return storage.load() ??
         AlarmConfigModel(
           soundSetting: AlarmSoundSettingModel(
             assetAudioPath: "assets/sounds/alarm.mp3",
-            volume: 0.3,
+            volume: 0.5,
             vibrate: true,
           ),
           alarm: AlarmModel(
