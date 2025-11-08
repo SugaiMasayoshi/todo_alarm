@@ -53,7 +53,9 @@ class MainApp extends ConsumerWidget {
       title: 'Todo Alarm',
       routerConfig: router,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromARGB(255, 5, 89, 146),
+        ),
         useMaterial3: true,
       ),
     );

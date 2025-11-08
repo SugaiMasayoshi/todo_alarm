@@ -29,6 +29,7 @@ class AlarmStorageRepository {
   AlarmStorageRepository(this.storage);
 
   AlarmConfigModel load() {
+    // Todo: 設定がない場合のデフォルト値を共通化
     return storage.load() ??
         AlarmConfigModel(
           soundSetting: AlarmSoundSettingModel(

@@ -6,4 +6,5 @@ extension GoRouterExtension on BuildContext {
   void goToTodoAlarm() => goNamed(RouteName.todoAlarm);
   void goToTodoAdd() => goNamed(RouteName.todoAdd);
   void goToSpeech() => goNamed(RouteName.speech);
+  void goToSettings() => goNamed(RouteName.settings);
 }
