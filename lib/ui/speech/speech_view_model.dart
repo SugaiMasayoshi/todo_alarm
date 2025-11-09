@@ -134,9 +134,11 @@ class SpeechViewModel extends _$SpeechViewModel {
       print(
         '✅ 先頭 todo にマッチ: ${first.title} (ratio=${ratio.toStringAsFixed(2)}) -> アラーム停止',
       );
-      ref.read(alarmRepositoryProvider).stop();
       final router = ref.read(appRouterProvider);
-      router.pop();
+      if (router.canPop()) {
+        router.pop();
+      }
+      ref.read(alarmRepositoryProvider).stop();
     } else {
       print('❌ 先頭 todo とマッチせず (ratio=${ratio.toStringAsFixed(2)})');
     }

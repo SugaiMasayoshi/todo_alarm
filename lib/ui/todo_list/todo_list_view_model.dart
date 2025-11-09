@@ -26,8 +26,8 @@ class TodoListViewModel extends _$TodoListViewModel {
     final newItems = [...state.items, todo];
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> updateTodo(TodoItemModel updatedTodo) async {
@@ -36,16 +36,16 @@ class TodoListViewModel extends _$TodoListViewModel {
         updatedTodo;
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> deleteTodo(String id) async {
     final newItems = [...state.items]..removeWhere((item) => item.id == id);
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> reorderTodos(int oldIndex, int newIndex) async {
@@ -59,7 +59,7 @@ class TodoListViewModel extends _$TodoListViewModel {
 
     final newState = TodoListModel(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/ui/setting/settings_viewmodel.dart';
 
@@ -23,6 +24,9 @@ class SettingsPage extends ConsumerWidget {
                     .read(settingsViewModelProvider.notifier)
                     .setAlarmVolume(value);
               },
+              onChangeEnd: (_) {
+                ref.read(settingsViewModelProvider.notifier).saveSettings();
+              },
             ),
           ),
           Divider(height: 2),
@@ -34,6 +38,7 @@ class SettingsPage extends ConsumerWidget {
               ref
                   .read(settingsViewModelProvider.notifier)
                   .setVibrateOnAlarm(value);
+              ref.read(settingsViewModelProvider.notifier).saveSettings();
             },
           ),
           Divider(height: 2),
@@ -47,6 +52,9 @@ class SettingsPage extends ConsumerWidget {
                     .read(settingsViewModelProvider.notifier)
                     .setSpeechSensitivity(value);
               },
+              onChangeEnd: (_) {
+                ref.read(settingsViewModelProvider.notifier).saveSettings();
+              },
             ),
           ),
           Divider(height: 2),
@@ -55,6 +63,11 @@ class SettingsPage extends ConsumerWidget {
             leading: Icon(Icons.info),
             onTap: () => showLicensePage(
               context: context,
+              applicationName: 'やることアラーム',
+              applicationVersion: '1.0.0',
+              applicationLegalese: '''© 2025 やることアラーム
+ハッカソンで制作した原型アプリを基盤に、仕様を再設計し保守性の高いコードへ全面改修して構築しました。
+原型アプリの制作者:...''',
               applicationIcon: SizedBox(
                 width: 128,
                 height: 128,

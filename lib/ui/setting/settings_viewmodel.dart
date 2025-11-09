@@ -1,4 +1,5 @@
 import 'package:alarm/alarm.dart';
+import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
@@ -35,40 +36,31 @@ class SettingsViewModel extends _$SettingsViewModel {
     await alarmStorageRepo.save(config);
   }
 
-  Future<void> saveSettings(SettingsModel settings) async {
+  Future<void> saveSettings() async {
     final storage = ref.read(settingsStorageRepositoryProvider);
     final alarmStorageRepo = ref.read(alarmStorageRepositoryProvider);
     final alarmConfig = alarmStorageRepo.load();
 
     final newAlarmConfig = alarmConfig.copyWith(
       soundSetting: alarmConfig.soundSetting.copyWith(
-        volume: settings.alarmVolume,
-        vibrate: settings.vibrateOnAlarm,
+        volume: state.alarmVolume,
+        vibrate: state.vibrateOnAlarm,
       ),
     );
 
     await setAlarm(newAlarmConfig);
-    if (!ref.mounted) return;
-    await storage.save(settings);
-    if (!ref.mounted) return;
-    state = settings;
+    await storage.save(state);
   }
 
   Future<void> setAlarmVolume(double volume) async {
-    final newSettings = state.copyWith(alarmVolume: volume);
-    await saveSettings(newSettings);
-    if (!ref.mounted) return;
+    state = state.copyWith(alarmVolume: volume);
   }
 
   Future<void> setVibrateOnAlarm(bool vibrate) async {
-    final newSettings = state.copyWith(vibrateOnAlarm: vibrate);
-    await saveSettings(newSettings);
-    if (!ref.mounted) return;
+    state = state.copyWith(vibrateOnAlarm: vibrate);
   }
 
   Future<void> setSpeechSensitivity(double sensitivity) async {
-    final newSettings = state.copyWith(speechSensitivity: sensitivity);
-    await saveSettings(newSettings);
-    if (!ref.mounted) return;
+    state = state.copyWith(speechSensitivity: sensitivity);
   }
 }
