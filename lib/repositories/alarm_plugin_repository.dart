@@ -42,7 +42,7 @@ class AlarmPluginRepository implements IAlarmRepository {
         assetAudioPath: 'assets/sounds/alarm.mp3',
         loopAudio: true,
         vibrate: alarmConfig.soundSetting.vibrate,
-        warningNotificationOnKill: Platform.isIOS,
+        warningNotificationOnKill: true,
         androidFullScreenIntent: true,
         volumeSettings: VolumeSettings.fade(
           volume: alarmConfig.soundSetting.volume,
@@ -50,10 +50,9 @@ class AlarmPluginRepository implements IAlarmRepository {
           volumeEnforced: true,
         ),
         notificationSettings: NotificationSettings(
-          title: '今日の目標を達成しましょう！',
+          title: 'やることを読み上げてアラームを停止',
           body: alarmConfig.alarm.title,
-          icon: 'notification_icon',
-          iconColor: Colors.blue,
+          iconColor: Color.fromARGB(255, 5, 89, 146),
         ),
       ),
     );

@@ -11,6 +11,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
   await Alarm.init();
+  await Alarm.setWarningNotificationOnKill(
+    "アラームが鳴らない可能性があります",
+    "アラームを確実に鳴らすには、再度アプリを開いてください。",
+  );
 
   final openSpeechOnLaunch = await Alarm.isRinging();
 
