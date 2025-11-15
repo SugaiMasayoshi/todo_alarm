@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/repositories/models/todo_item_model.dart';
 import 'package:todo_alarm/repositories/models/todo_list_model.dart';
-import 'package:todo_alarm/repositories/todo_list_repository.dart';
+import 'package:todo_alarm/repositories/todo_list_storage_repository.dart';
 import 'package:uuid/uuid.dart';
 
 part '../../generated/ui/todo_list/todo_list_view_model.g.dart';

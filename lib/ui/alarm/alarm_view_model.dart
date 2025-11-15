@@ -10,8 +10,8 @@ part '../../generated/ui/alarm/alarm_view_model.g.dart';
 class AlarmViewModel extends _$AlarmViewModel {
   @override
   AlarmConfig build() {
-    final storageRepository = ref.watch(alarmStorageRepositoryProvider);
-    return storageRepository.load();
+    final alarmStorage = ref.watch(alarmStorageRepositoryProvider);
+    return alarmStorage.load();
   }
 
   String get alarmTimeString {
@@ -22,8 +22,8 @@ class AlarmViewModel extends _$AlarmViewModel {
   }
 
   Future<void> setAlarm(AlarmConfig config) async {
-    await ref.read(alarmServiceProvider).set(config);
-    await ref.read(alarmStorageRepositoryProvider).save(config);
+    ref.read(alarmStorageRepositoryProvider);
+    ref.read(alarmServiceProvider).set(config);
     state = config;
   }
 
