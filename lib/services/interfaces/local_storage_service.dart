@@ -1,23 +1,23 @@
 import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/shared_preferences_repository.dart';
+import 'package:todo_alarm/services/implementations/local_storage_service_impl.dart';
 
-part '../generated/repositories/local_storage_repository.g.dart';
+part '../../generated/services/interfaces/local_storage_service.g.dart';
 
-abstract class ILocalStorageRepository {
+@Riverpod(keepAlive: true)
+ILocalStorageService localStorageService(Ref ref) {
+  return LocalStorageServiceImpl(ref.watch(sharedPreferencesProvider));
+}
+
+abstract class ILocalStorageService {
   Future<void> setString(String key, String value);
   String? getString(String key);
   Future<void> remove(String key);
 }
 
-@riverpod
-ILocalStorageRepository localStorageRepository(Ref ref) {
-  return SharedPreferencesRepository(ref.watch(sharedPreferencesProvider));
-}
-
 class GenericLocalStorage<T> {
-  final ILocalStorageRepository _storage;
+  final ILocalStorageService _storage;
   final String key;
   final T Function(Map<String, dynamic>) fromJson;
   final Map<String, dynamic> Function(T) toJson;

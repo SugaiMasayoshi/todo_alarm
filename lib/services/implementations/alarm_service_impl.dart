@@ -1,23 +1,19 @@
-import 'dart:io';
-
 import 'package:alarm/alarm.dart';
 import 'package:alarm/utils/alarm_set.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/repositories/alarm_repository.dart';
-import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
+import 'package:todo_alarm/domain/alarm/alarm_config.dart';
+import 'package:todo_alarm/services/interfaces/alarm_service.dart';
 
 final alarmRingingStreamProvider = StreamProvider<AlarmSet>((ref) {
   return Alarm.ringing;
 });
 
-class AlarmPluginRepository implements IAlarmRepository {
-  final int id = 1;
+class AlarmServiceImpl implements IAlarmService {
+  final int _id = 1;
 
   @override
-  Future<void> set(AlarmConfigModel alarmConfig) async {
-    // Alarm.set already replaces alarms with the same id or scheduled time, so
-    // calling stop beforehand can surface platform errors when nothing is active.
+  Future<void> set(AlarmConfig alarmConfig) async {
     var alarmDateTime = alarmConfig.alarm.dateTime;
     final now = DateTime.now();
 
@@ -37,7 +33,7 @@ class AlarmPluginRepository implements IAlarmRepository {
 
     await Alarm.set(
       alarmSettings: AlarmSettings(
-        id: id,
+        id: _id,
         dateTime: alarmDateTime,
         assetAudioPath: 'assets/sounds/alarm.mp3',
         loopAudio: true,
@@ -60,6 +56,6 @@ class AlarmPluginRepository implements IAlarmRepository {
 
   @override
   Future<void> stop() async {
-    await Alarm.stop(id);
+    await Alarm.stop(_id);
   }
 }

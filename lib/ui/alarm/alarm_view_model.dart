@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
-import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
+import 'package:todo_alarm/domain/alarm/alarm_config.dart';
+import 'package:todo_alarm/services/interfaces/alarm_service.dart';
 
 part '../../generated/ui/alarm/alarm_view_model.g.dart';
 
 @riverpod
 class AlarmViewModel extends _$AlarmViewModel {
   @override
-  AlarmConfigModel build() {
+  AlarmConfig build() {
     final storageRepository = ref.watch(alarmStorageRepositoryProvider);
     return storageRepository.load();
   }
@@ -21,14 +21,14 @@ class AlarmViewModel extends _$AlarmViewModel {
     return '$hour:$minute';
   }
 
-  Future<void> setAlarm(AlarmConfigModel config) async {
-    await ref.read(alarmRepositoryProvider).set(config);
+  Future<void> setAlarm(AlarmConfig config) async {
+    await ref.read(alarmServiceProvider).set(config);
     await ref.read(alarmStorageRepositoryProvider).save(config);
     state = config;
   }
 
   Future<void> stopAlarm() async {
-    await ref.read(alarmRepositoryProvider).stop();
+    await ref.read(alarmServiceProvider).stop();
   }
 
   Future<void> openTimePickerDialog(BuildContext context) async {

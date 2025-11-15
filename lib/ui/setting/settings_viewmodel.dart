@@ -1,10 +1,10 @@
 import 'package:alarm/alarm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
-import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
+import 'package:todo_alarm/domain/alarm/alarm_config.dart';
 import 'package:todo_alarm/repositories/models/settings_model.dart';
 import 'package:todo_alarm/repositories/settings_storage_repository.dart';
+import 'package:todo_alarm/services/interfaces/alarm_service.dart';
 
 part "../../generated/ui/setting/settings_viewmodel.g.dart";
 
@@ -16,7 +16,7 @@ class SettingsViewModel extends _$SettingsViewModel {
     return storage.load();
   }
 
-  Future<void> setAlarm(AlarmConfigModel config) async {
+  Future<void> setAlarm(AlarmConfig config) async {
     final alarmStorageRepo = ref.read(alarmStorageRepositoryProvider);
     final currentConfig = alarmStorageRepo.load();
     if (currentConfig == config) {
@@ -27,7 +27,7 @@ class SettingsViewModel extends _$SettingsViewModel {
     if (!ref.mounted) return;
 
     if (!isRinging) {
-      final alarmRepo = ref.read(alarmRepositoryProvider);
+      final alarmRepo = ref.read(alarmServiceProvider);
       await alarmRepo.set(config);
       if (!ref.mounted) return;
     }

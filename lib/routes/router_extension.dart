@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'app_router.dart';
 
 extension GoRouterExtension on BuildContext {
-  void goToTodoAlarm() => goNamed(RouteName.todoAlarm);
-  void goToTodoAdd() => goNamed(RouteName.todoAdd);
-  void goToSpeech() => goNamed(RouteName.speech);
-  void goToSettings() => goNamed(RouteName.settings);
+  void navigateTodoAlarm() => goNamed(RouteName.todoAlarm);
+  void navigateTodoAdd() => goNamed(RouteName.todoAdd);
+  void navigateSpeech() => goNamed(RouteName.speech);
+  void navigateSettings() => goNamed(RouteName.settings);
 }

@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_repository.dart';
 import 'package:todo_alarm/repositories/speech_to_text_repository.dart';
-import 'package:todo_alarm/repositories/todo_list_repository.dart';
+import 'package:todo_alarm/repositories/todo_list_storage_repository.dart';
 import 'package:todo_alarm/routes/app_router.dart';
+import 'package:todo_alarm/services/interfaces/alarm_service.dart';
 import 'package:todo_alarm/ui/setting/settings_viewmodel.dart';
 import 'package:todo_alarm/ui/speech/speech_state.dart';
 
@@ -138,7 +138,7 @@ class SpeechViewModel extends _$SpeechViewModel {
       if (router.canPop()) {
         router.pop();
       }
-      ref.read(alarmRepositoryProvider).stop();
+      ref.read(alarmServiceProvider).stop();
     } else {
       print('❌ 先頭 todo とマッチせず (ratio=${ratio.toStringAsFixed(2)})');
     }

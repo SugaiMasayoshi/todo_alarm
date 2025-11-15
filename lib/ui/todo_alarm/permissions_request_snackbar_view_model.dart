@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/permissions_model.dart';
+import 'package:todo_alarm/domain/permissions/permissions_status.dart';
 import 'package:todo_alarm/repositories/permissions_repository.dart';
 
 part '../../generated/ui/todo_alarm/permissions_request_snackbar_view_model.g.dart';
@@ -8,12 +8,12 @@ part '../../generated/ui/todo_alarm/permissions_request_snackbar_view_model.g.da
 class PermissionsRequestSnackbarViewModel
     extends _$PermissionsRequestSnackbarViewModel {
   @override
-  AsyncValue<PermissionsModel> build() {
+  AsyncValue<PermissionsStatus> build() {
     final state = ref.watch(permissionsRepositoryProvider);
     return state;
   }
 
-  Future<PermissionsModel?> refreshPermissionsStatus() async {
+  Future<PermissionsStatus?> refreshPermissionsStatus() async {
     final result = await AsyncValue.guard(() async {
       return await ref
           .read(permissionsRepositoryProvider.notifier)
@@ -28,7 +28,7 @@ class PermissionsRequestSnackbarViewModel
     return result.asData?.value;
   }
 
-  Future<PermissionsModel?> requestPermissions() async {
+  Future<PermissionsStatus?> requestPermissions() async {
     state = const AsyncValue.loading();
 
     final result = await AsyncValue.guard(() async {

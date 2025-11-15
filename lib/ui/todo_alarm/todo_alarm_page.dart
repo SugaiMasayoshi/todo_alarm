@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:todo_alarm/repositories/models/permissions_model.dart';
+import 'package:todo_alarm/domain/permissions/permissions_status.dart';
 import 'package:todo_alarm/routes/router_extension.dart';
 import 'package:todo_alarm/ui/alarm/alarm.dart';
 import 'package:todo_alarm/ui/todo_alarm/permissions_request_snackbar.dart';
@@ -10,7 +10,7 @@ import 'package:todo_alarm/ui/todo_list/todo_list.dart';
 class TodoAlarmPage extends ConsumerWidget {
   const TodoAlarmPage({super.key});
 
-  bool _hasAllPermissions(PermissionsModel permissions) {
+  bool _hasAllPermissions(PermissionsStatus permissions) {
     return permissions.notification && permissions.accessNotificationPolicy;
   }
 
@@ -44,7 +44,7 @@ class TodoAlarmPage extends ConsumerWidget {
 
   void _showOrHidePermissionsSnackBar(
     BuildContext context,
-    PermissionsModel permissions,
+    PermissionsStatus permissions,
   ) {
     if (!context.mounted) {
       return;
@@ -68,7 +68,7 @@ class TodoAlarmPage extends ConsumerWidget {
       _refreshAndShowPermissionsSnackBar(context, ref);
     });
 
-    ref.listen<AsyncValue<PermissionsModel>>(
+    ref.listen<AsyncValue<PermissionsStatus>>(
       permissionsRequestSnackbarViewModelProvider,
       (previous, next) {
         final permissions = next.asData?.value;
@@ -84,7 +84,7 @@ class TodoAlarmPage extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            context.goToSettings();
+            context.navigateSettings();
           },
           icon: Icon(Icons.settings),
         ),
@@ -94,7 +94,7 @@ class TodoAlarmPage extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.goToSpeech();
+              context.navigateSpeech();
             },
             icon: Icon(Icons.mic),
           ),
@@ -110,7 +110,7 @@ class TodoAlarmPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          context.goToTodoAdd();
+          context.navigateTodoAdd();
         },
       ),
     );

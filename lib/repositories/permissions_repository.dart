@@ -1,21 +1,21 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/permissions_model.dart';
-import 'package:todo_alarm/services/permissions_service.dart';
+import 'package:todo_alarm/domain/permissions/permissions_status.dart';
+import 'package:todo_alarm/services/interfaces/permissions_service.dart';
 
 part '../generated/repositories/permissions_repository.g.dart';
 
 @riverpod
 class PermissionsRepository extends _$PermissionsRepository {
-  late final PermissionsService _service = ref.watch(
+  late final IPermissionsService _service = ref.watch(
     permissionsServiceProvider,
   );
 
   @override
-  Future<PermissionsModel> build() async {
+  Future<PermissionsStatus> build() async {
     return await _service.fetchCorePermissionsStatus();
   }
 
-  Future<PermissionsModel> refreshCorePermissionsStatus() async {
+  Future<PermissionsStatus> refreshCorePermissionsStatus() async {
     final permissions = await _service.fetchCorePermissionsStatus();
     if (!ref.mounted) {
       return permissions;
@@ -25,7 +25,7 @@ class PermissionsRepository extends _$PermissionsRepository {
     return permissions;
   }
 
-  Future<PermissionsModel> requestCorePermissions() async {
+  Future<PermissionsStatus> requestCorePermissions() async {
     final permissions = await _service.requestCorePermissions();
     if (!ref.mounted) {
       return permissions;

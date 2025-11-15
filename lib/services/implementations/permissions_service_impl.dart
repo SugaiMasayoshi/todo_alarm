@@ -1,40 +1,36 @@
 import 'dart:io';
 
 import 'package:permission_handler/permission_handler.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/permissions_model.dart';
+import 'package:todo_alarm/domain/permissions/permissions_status.dart';
+import 'package:todo_alarm/services/interfaces/permissions_service.dart';
 
-part '../generated/services/permissions_service.g.dart';
-
-@riverpod
-PermissionsService permissionsService(Ref ref) {
-  return PermissionsService();
-}
-
-class PermissionsService {
-  Future<PermissionsModel> fetchCorePermissionsStatus() async {
+class PermissionsServiceImpl implements IPermissionsService {
+  @override
+  Future<PermissionsStatus> fetchCorePermissionsStatus() async {
     final notificationStatus = await Permission.notification.status;
     final accessPolicyStatus = await Permission.accessNotificationPolicy.status;
 
-    return PermissionsModel(
+    return PermissionsStatus(
       notification: notificationStatus.isGranted,
       accessNotificationPolicy: accessPolicyStatus.isGranted,
     );
   }
 
-  Future<PermissionsModel> requestCorePermissions() async {
+  @override
+  Future<PermissionsStatus> requestCorePermissions() async {
     final results = await [
       Permission.notification,
       Permission.accessNotificationPolicy,
     ].request();
 
-    return PermissionsModel(
+    return PermissionsStatus(
       notification: results[Permission.notification]?.isGranted ?? false,
       accessNotificationPolicy:
           results[Permission.accessNotificationPolicy]?.isGranted ?? false,
     );
   }
 
+  @override
   Future<void> openAppSettingsScreen() async {
     if (!Platform.isAndroid) {
       await openAppSettings();
@@ -44,6 +40,7 @@ class PermissionsService {
     await openAppSettings();
   }
 
+  @override
   Future<void> requestFullScreenPermission() async {
     await openAppSettingsScreen();
   }
