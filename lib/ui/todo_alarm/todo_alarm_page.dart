@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/domain/permissions/permissions_status.dart';
-import 'package:todo_alarm/routes/router_extension.dart';
+import 'package:todo_alarm/routing/router_extension.dart';
 import 'package:todo_alarm/ui/alarm/alarm.dart';
 import 'package:todo_alarm/ui/todo_alarm/permissions_request_snackbar.dart';
 import 'package:todo_alarm/ui/todo_alarm/permissions_request_snackbar_view_model.dart';

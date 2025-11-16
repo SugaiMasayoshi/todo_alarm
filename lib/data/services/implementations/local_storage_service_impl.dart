@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_alarm/services/interfaces/local_storage_service.dart';
+import 'package:todo_alarm/data/services/interfaces/local_storage_service.dart';
 
-part '../../generated/services/implementations/local_storage_service_impl.g.dart';
+part '../../../generated/data/services/implementations/local_storage_service_impl.g.dart';
 
 @Riverpod(keepAlive: true)
 SharedPreferences sharedPreferences(Ref ref) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
+import 'package:todo_alarm/data/repositories/alarm_storage_repository.dart';
 import 'package:todo_alarm/domain/alarm/alarm_config.dart';
-import 'package:todo_alarm/services/interfaces/alarm_service.dart';
+import 'package:todo_alarm/data/services/interfaces/alarm_service.dart';
 
 part '../../generated/ui/alarm/alarm_view_model.g.dart';
 

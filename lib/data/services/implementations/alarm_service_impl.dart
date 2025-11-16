@@ -3,7 +3,7 @@ import 'package:alarm/utils/alarm_set.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/domain/alarm/alarm_config.dart';
-import 'package:todo_alarm/services/interfaces/alarm_service.dart';
+import 'package:todo_alarm/data/services/interfaces/alarm_service.dart';
 
 final alarmRingingStreamProvider = StreamProvider<AlarmSet>((ref) {
   return Alarm.ringing;

@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/domain/permissions/permissions_status.dart';
-import 'package:todo_alarm/repositories/permissions_repository.dart';
+import 'package:todo_alarm/data/repositories/permissions_repository.dart';
 
 part '../../generated/ui/todo_alarm/todo_alarm_view_model.g.dart';
 

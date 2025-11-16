@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/settings_model.dart';
-import 'package:todo_alarm/services/interfaces/local_storage_service.dart';
+import 'package:todo_alarm/data/models/settings_model.dart';
+import 'package:todo_alarm/data/services/interfaces/local_storage_service.dart';
 
-part '../generated/repositories/settings_storage_repository.g.dart';
+part '../../generated/data/repositories/settings_storage_repository.g.dart';
 
 @riverpod
 GenericLocalStorage<SettingsModel> settingsStorage(Ref ref) {

@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/repositories/models/todo_item_model.freezed.dart';
-part '../../generated/repositories/models/todo_item_model.g.dart';
+part '../../generated/data/models/todo_item_model.freezed.dart';
+part '../../generated/data/models/todo_item_model.g.dart';
 
 enum TodoStatus { todo, doing, done }
 

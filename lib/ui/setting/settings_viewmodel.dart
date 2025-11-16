@@ -1,10 +1,10 @@
 import 'package:alarm/alarm.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
+import 'package:todo_alarm/data/models/settings_model.dart';
+import 'package:todo_alarm/data/repositories/alarm_storage_repository.dart';
+import 'package:todo_alarm/data/services/interfaces/alarm_service.dart';
 import 'package:todo_alarm/domain/alarm/alarm_config.dart';
-import 'package:todo_alarm/repositories/models/settings_model.dart';
-import 'package:todo_alarm/repositories/settings_storage_repository.dart';
-import 'package:todo_alarm/services/interfaces/alarm_service.dart';
+import 'package:todo_alarm/data/repositories/settings_storage_repository.dart';
 
 part "../../generated/ui/setting/settings_viewmodel.g.dart";
 

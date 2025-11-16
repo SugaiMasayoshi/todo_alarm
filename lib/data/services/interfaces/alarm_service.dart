@@ -2,9 +2,9 @@ import 'package:alarm/alarm.dart';
 import 'package:alarm/utils/alarm_set.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/domain/alarm/alarm_config.dart';
-import 'package:todo_alarm/services/implementations/alarm_service_impl.dart';
+import 'package:todo_alarm/data/services/implementations/alarm_service_impl.dart';
 
-part '../../generated/services/interfaces/alarm_service.g.dart';
+part '../../../generated/data/services/interfaces/alarm_service.g.dart';
 
 @riverpod
 IAlarmService alarmService(Ref ref) {

@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/domain/permissions/permissions_status.dart';
-import 'package:todo_alarm/services/interfaces/permissions_service.dart';
+import 'package:todo_alarm/data/services/interfaces/permissions_service.dart';
 
-part '../generated/repositories/permissions_repository.g.dart';
+part '../../generated/data/repositories/permissions_repository.g.dart';
 
 @riverpod
 class PermissionsRepository extends _$PermissionsRepository {

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:todo_alarm/domain/permissions/permissions_status.dart';
-import 'package:todo_alarm/services/interfaces/permissions_service.dart';
+import 'package:todo_alarm/data/services/interfaces/permissions_service.dart';
 
 class PermissionsServiceImpl implements IPermissionsService {
   @override

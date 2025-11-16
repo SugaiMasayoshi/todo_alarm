@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/services/implementations/local_storage_service_impl.dart';
+import 'package:todo_alarm/data/services/implementations/local_storage_service_impl.dart';
 
-part '../../generated/services/interfaces/local_storage_service.g.dart';
+part '../../../generated/data/services/interfaces/local_storage_service.g.dart';
 
 @Riverpod(keepAlive: true)
 ILocalStorageService localStorageService(Ref ref) {

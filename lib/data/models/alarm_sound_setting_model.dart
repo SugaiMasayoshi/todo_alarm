@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/repositories/models/alarm_sound_setting_model.freezed.dart';
-part '../../generated/repositories/models/alarm_sound_setting_model.g.dart';
+part '../../generated/data/models/alarm_sound_setting_model.freezed.dart';
+part '../../generated/data/models/alarm_sound_setting_model.g.dart';
 
 @freezed
 abstract class AlarmSoundSettingModel with _$AlarmSoundSettingModel {

@@ -4,8 +4,8 @@ import 'package:alarm/model/alarm_settings.dart';
 import 'package:alarm/model/notification_settings.dart';
 import 'package:alarm/model/volume_settings.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_alarm/repositories/models/alarm_model.dart';
-import 'package:todo_alarm/repositories/models/alarm_sound_setting_model.dart';
+import 'package:todo_alarm/data/models/alarm_model.dart';
+import 'package:todo_alarm/data/models/alarm_sound_setting_model.dart';
 
 part '../../generated/domain/alarm/alarm_config.freezed.dart';
 part '../../generated/domain/alarm/alarm_config.g.dart';

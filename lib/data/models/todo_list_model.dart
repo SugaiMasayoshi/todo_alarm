@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_alarm/repositories/models/todo_item_model.dart';
+import 'package:todo_alarm/data/models/todo_item_model.dart';
 
-part '../../generated/repositories/models/todo_list_model.freezed.dart';
-part '../../generated/repositories/models/todo_list_model.g.dart';
+part '../../generated/data/models/todo_list_model.freezed.dart';
+part '../../generated/data/models/todo_list_model.g.dart';
 
 @freezed
 abstract class TodoListModel with _$TodoListModel {

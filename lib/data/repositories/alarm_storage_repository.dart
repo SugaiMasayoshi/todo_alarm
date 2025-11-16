@@ -5,11 +5,11 @@ import 'package:alarm/model/notification_settings.dart';
 import 'package:alarm/model/volume_settings.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_alarm/domain/alarm/alarm_config.dart';
-import 'package:todo_alarm/services/interfaces/local_storage_service.dart';
-part '../generated/repositories/alarm_storage_repository.g.dart';
+import 'package:todo_alarm/data/services/interfaces/local_storage_service.dart';
+part '../../generated/data/repositories/alarm_storage_repository.g.dart';
 
 @riverpod
-GenericLocalStorage<AlarmConfig> alarmStorage(Ref ref) {
+GenericLocalStorage<AlarmConfig> alarmStorageAdapter(Ref ref) {
   final storage = ref.watch(localStorageServiceProvider);
   return GenericLocalStorage<AlarmConfig>(
     storage,
@@ -21,7 +21,7 @@ GenericLocalStorage<AlarmConfig> alarmStorage(Ref ref) {
 
 @riverpod
 AlarmStorageRepository alarmStorageRepository(Ref ref) {
-  final storage = ref.watch(alarmStorageProvider);
+  final storage = ref.watch(alarmStorageAdapterProvider);
   return AlarmStorageRepository(storage);
 }
 

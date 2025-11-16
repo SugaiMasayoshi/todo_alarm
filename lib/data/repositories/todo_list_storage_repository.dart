@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/todo_list_model.dart';
-import 'package:todo_alarm/services/interfaces/local_storage_service.dart';
+import 'package:todo_alarm/data/models/todo_list_model.dart';
+import 'package:todo_alarm/data/services/interfaces/local_storage_service.dart';
 
-part '../generated/repositories/todo_list_repository.g.dart';
+part '../../generated/data/repositories/todo_list_storage_repository.g.dart';
 
 @riverpod
 GenericLocalStorage<TodoListModel> todoListStorage(Ref ref) {

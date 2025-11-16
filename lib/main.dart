@@ -2,10 +2,10 @@ import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_alarm/routes/app_router.dart';
+import 'package:todo_alarm/routing/app_router.dart';
 import 'package:alarm/utils/alarm_set.dart';
-import 'package:todo_alarm/services/implementations/alarm_service_impl.dart';
-import 'package:todo_alarm/services/implementations/local_storage_service_impl.dart';
+import 'package:todo_alarm/data/services/implementations/alarm_service_impl.dart';
+import 'package:todo_alarm/data/services/implementations/local_storage_service_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

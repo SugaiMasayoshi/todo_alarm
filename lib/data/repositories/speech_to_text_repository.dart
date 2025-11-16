@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-part '../generated/repositories/speech_to_text_repository.g.dart';
+part '../../generated/data/repositories/speech_to_text_repository.g.dart';
 
 abstract class ISpeechToTextRepository {
   Future<bool> initialize({
