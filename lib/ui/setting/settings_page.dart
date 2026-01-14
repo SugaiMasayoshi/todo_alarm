@@ -65,7 +65,7 @@ class SettingsPage extends ConsumerWidget {
               applicationName: 'やることアラーム',
               applicationVersion: '1.0.0',
               applicationLegalese: '''© 2025 やることアラーム
-ハッカソンで制作した原型アプリを基盤に、仕様を再設計し保守性の高いコードへ全面改修して構築しました。
+ハッカソンで制作したアプリを基盤に、仕様を再設計し改修して作成されました。
 原型アプリの制作者:...''',
               applicationIcon: SizedBox(
                 width: 128,

@@ -25,10 +25,6 @@ class AlarmServiceImpl implements IAlarmService {
         alarmDateTime.hour,
         alarmDateTime.minute,
       ).add(const Duration(days: 1));
-
-      print(
-        '⏰ Alarm time is in the past. Setting for tomorrow: $alarmDateTime',
-      );
     }
 
     await Alarm.set(
@@ -46,8 +42,8 @@ class AlarmServiceImpl implements IAlarmService {
           volumeEnforced: true,
         ),
         notificationSettings: NotificationSettings(
-          title: 'やることを読み上げてアラームを停止',
-          body: alarmConfig.alarm.title,
+          title: "Todo Alarm",
+          body: 'やることを読み上げてアラームを停止',
           iconColor: Color.fromARGB(255, 5, 89, 146),
         ),
       ),
@@ -55,7 +51,21 @@ class AlarmServiceImpl implements IAlarmService {
   }
 
   @override
-  Future<void> stop() async {
+  Future<AlarmConfig?> stopAndReschedule(AlarmConfig alarmConfig) async {
+    final isRinging = await Alarm.isRinging();
+    if (!isRinging) {
+      return null;
+    }
+
     await Alarm.stop(_id);
+
+    final nextConfig = alarmConfig.copyWith(
+      alarm: alarmConfig.alarm.copyWith(
+        dateTime: alarmConfig.alarm.dateTime.add(const Duration(days: 1)),
+      ),
+    );
+
+    await set(nextConfig);
+    return nextConfig;
   }
 }

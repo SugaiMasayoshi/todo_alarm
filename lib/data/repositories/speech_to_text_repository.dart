@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -38,16 +39,22 @@ class SpeechToTextRepository implements ISpeechToTextRepository {
     try {
       return await _speechToText.initialize(
         onStatus: (status) {
-          print('音声認識ステータス: $status');
+          if (kDebugMode) {
+            print('音声認識ステータス: $status');
+          }
           onStatus?.call(status);
         },
         onError: (error) {
-          print('音声認識エラー: ${error.errorMsg}');
+          if (kDebugMode) {
+            print('音声認識エラー: ${error.errorMsg}');
+          }
           onError?.call(error.errorMsg);
         },
       );
     } catch (e) {
-      print('初期化エラー: $e');
+      if (kDebugMode) {
+        print('初期化エラー: $e');
+      }
       return false;
     }
   }

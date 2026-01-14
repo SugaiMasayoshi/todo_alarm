@@ -25,10 +25,7 @@ abstract class AlarmConfig with _$AlarmConfig {
       volume: 0.5,
       vibrate: true,
     ),
-    alarm: AlarmModel(
-      dateTime: DateTime.now().add(const Duration(hours: 1)),
-      title: 'アラームを設定',
-    ),
+    alarm: AlarmModel(dateTime: DateTime.now().add(const Duration(hours: 1))),
   );
 
   AlarmSettings toAlarmSettings() {
@@ -46,8 +43,8 @@ abstract class AlarmConfig with _$AlarmConfig {
         volumeEnforced: true,
       ),
       notificationSettings: NotificationSettings(
-        title: alarm.title,
-        body: '時間です！',
+        title: "Todo Alarm",
+        body: 'やることを読み上げてアラームを停止',
         iconColor: const Color.fromARGB(255, 5, 89, 146),
       ),
     );

@@ -8,6 +8,7 @@ abstract class SpeechState with _$SpeechState {
     @Default('') String recognizedText,
     @Default(false) bool isListening,
     @Default(false) bool isInitialized,
+    @Default(0) int emergencyTapCount,
     String? errorMessage,
   }) = _SpeechState;
 }

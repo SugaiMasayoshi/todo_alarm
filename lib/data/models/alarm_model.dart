@@ -5,8 +5,7 @@ part '../../generated/data/models/alarm_model.g.dart';
 
 @freezed
 abstract class AlarmModel with _$AlarmModel {
-  factory AlarmModel({required DateTime dateTime, required String title}) =
-      _AlarmModel;
+  factory AlarmModel({required DateTime dateTime}) = _AlarmModel;
 
   factory AlarmModel.fromJson(Map<String, dynamic> json) =>
       _$AlarmModelFromJson(json);

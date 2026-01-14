@@ -3,6 +3,7 @@ import 'package:todo_alarm/data/repositories/speech_to_text_repository.dart';
 import 'package:todo_alarm/data/repositories/todo_list_storage_repository.dart';
 import 'package:todo_alarm/routing/app_router.dart';
 import 'package:todo_alarm/data/services/interfaces/alarm_service.dart';
+import 'package:todo_alarm/ui/alarm/alarm_view_model.dart';
 import 'package:todo_alarm/ui/setting/settings_viewmodel.dart';
 import 'package:todo_alarm/ui/speech/speech_state.dart';
 
@@ -20,8 +21,6 @@ class SpeechViewModel extends _$SpeechViewModel {
       final repository = ref.read(speechToTextRepositoryProvider);
       final success = await repository.initialize(
         onStatus: (status) {
-          print('🎤 ステータス: $status');
-
           if (status == 'notListening' || status == 'done') {
             state = state.copyWith(isListening: false);
           }
@@ -29,8 +28,6 @@ class SpeechViewModel extends _$SpeechViewModel {
           _stopAlarm();
         },
         onError: (errorMsg) {
-          print('❌ 音声認識エラー: $errorMsg');
-
           state = state.copyWith(
             isListening: false,
             errorMessage: '音声認識エラー: $errorMsg',
@@ -73,7 +70,6 @@ class SpeechViewModel extends _$SpeechViewModel {
         localeId: localeId,
       );
     } catch (e) {
-      print('❌ Error in startListening: $e');
       state = state.copyWith(isListening: false, errorMessage: 'リスニングエラー: $e');
     }
   }
@@ -85,7 +81,6 @@ class SpeechViewModel extends _$SpeechViewModel {
 
       state = state.copyWith(isListening: false);
     } catch (e) {
-      print('❌ Error in stopListening: $e');
       state = state.copyWith(isListening: false, errorMessage: '停止エラー: $e');
     }
   }
@@ -99,7 +94,6 @@ class SpeechViewModel extends _$SpeechViewModel {
   }
 
   void _stopAlarm() async {
-    print('🔍 認識されたテキスト: ${state.recognizedText}');
     _matchRecognizedTextWithGoals();
     Future.delayed(Duration(seconds: 3), () {
       clearText();
@@ -126,21 +120,26 @@ class SpeechViewModel extends _$SpeechViewModel {
     final totalLength = title.runes.length + recognized.runes.length;
     final ratio = totalLength == 0 ? 0.0 : (matchedCount * 2) / totalLength;
 
-    print(
-      '🔎 比較(先頭のみ, LCSベース): "$title" / matched=$matchedCount ratio=${ratio.toStringAsFixed(2)}',
-    );
-
     if (ratio >= threshold) {
-      print(
-        '✅ 先頭 todo にマッチ: ${first.title} (ratio=${ratio.toStringAsFixed(2)}) -> アラーム停止',
-      );
       final router = ref.read(appRouterProvider);
       if (router.canPop()) {
         router.pop();
       }
-      ref.read(alarmServiceProvider).stop();
-    } else {
-      print('❌ 先頭 todo とマッチせず (ratio=${ratio.toStringAsFixed(2)})');
+      ref
+          .read(alarmServiceProvider)
+          .stopAndReschedule(ref.read(alarmViewModelProvider));
+    }
+  }
+
+  Future<void> emergencyStopTap() async {
+    final nextCount = state.emergencyTapCount + 1;
+    state = state.copyWith(emergencyTapCount: nextCount);
+
+    if (nextCount >= 30) {
+      state = state.copyWith(emergencyTapCount: 0);
+      await ref
+          .read(alarmServiceProvider)
+          .stopAndReschedule(ref.read(alarmViewModelProvider));
     }
   }
 

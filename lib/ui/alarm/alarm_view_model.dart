@@ -28,7 +28,14 @@ class AlarmViewModel extends _$AlarmViewModel {
   }
 
   Future<void> stopAlarm() async {
-    await ref.read(alarmServiceProvider).stop();
+    final nextConfig = await ref
+        .read(alarmServiceProvider)
+        .stopAndReschedule(state);
+
+    if (nextConfig != null) {
+      state = nextConfig;
+      await ref.read(alarmStorageRepositoryProvider).save(nextConfig);
+    }
   }
 
   Future<void> openTimePickerDialog(BuildContext context) async {
@@ -39,7 +46,13 @@ class AlarmViewModel extends _$AlarmViewModel {
 
     if (time != null) {
       final newAlarm = state.alarm.copyWith(
-        dateTime: DateTime.now().copyWith(hour: time.hour, minute: time.minute),
+        dateTime: DateTime.now().copyWith(
+          hour: time.hour,
+          minute: time.minute,
+          second: 0,
+          millisecond: 0,
+          microsecond: 0,
+        ),
       );
       await setAlarm(state.copyWith(alarm: newAlarm));
     }

@@ -38,6 +38,13 @@ class SpeechPage extends ConsumerWidget {
               style: TextStyle(fontSize: 32),
             ),
             SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: speechViewModel.emergencyStopTap,
+              child: Text(
+                '緊急停止 ${state.emergencyTapCount}/30',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         ),
       ),

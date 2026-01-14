@@ -18,5 +18,5 @@ Stream<AlarmSet> alarmRingingStream(Ref ref) {
 
 abstract class IAlarmService {
   Future<void> set(AlarmConfig alarmConfig);
-  Future<void> stop();
+  Future<AlarmConfig?> stopAndReschedule(AlarmConfig alarmConfig);
 }
