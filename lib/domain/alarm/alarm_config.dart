@@ -27,7 +27,7 @@ abstract class AlarmConfig with _$AlarmConfig {
     ),
     alarm: AlarmModel(
       dateTime: DateTime.now().add(const Duration(hours: 1)),
-      title: 'Alarm Title',
+      title: 'アラームを設定',
     ),
   );
 
