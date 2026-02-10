@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/models/todo_item_model.dart';
-import 'package:todo_alarm/repositories/models/todo_list_model.dart';
-import 'package:todo_alarm/repositories/todo_list_repository.dart';
+import 'package:todo_alarm/data/models/todo_item_model.dart';
+import 'package:todo_alarm/data/models/todo_list_model.dart';
+import 'package:todo_alarm/data/repositories/todo_list_storage_repository.dart';
 import 'package:uuid/uuid.dart';
 
 part '../../generated/ui/todo_list/todo_list_view_model.g.dart';
@@ -23,46 +23,43 @@ class TodoListViewModel extends _$TodoListViewModel {
       status: TodoStatus.todo,
     );
 
-    final newItems = Map<String, TodoItemModel>.from(state.items)
-      ..[todo.id] = todo;
+    final newItems = [...state.items, todo];
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> updateTodo(TodoItemModel updatedTodo) async {
-    final newItems = Map<String, TodoItemModel>.from(state.items)
-      ..[updatedTodo.id] = updatedTodo;
+    final newItems = [...state.items];
+    newItems[state.items.indexWhere((item) => item.id == updatedTodo.id)] =
+        updatedTodo;
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> deleteTodo(String id) async {
-    final newItems = Map<String, TodoItemModel>.from(state.items)..remove(id);
+    final newItems = [...state.items]..removeWhere((item) => item.id == id);
     final newState = state.copyWith(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 
   Future<void> reorderTodos(int oldIndex, int newIndex) async {
-    final todoIds = state.items.keys.toList();
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final movedId = todoIds.removeAt(oldIndex);
-    todoIds.insert(newIndex, movedId);
+    final movedItem = state.items[oldIndex];
+    final newItems = [...state.items]
+      ..removeAt(oldIndex)
+      ..insert(newIndex, movedItem);
 
-    final newItems = <String, TodoItemModel>{};
-    for (final id in todoIds) {
-      newItems[id] = state.items[id]!;
-    }
-    final newState = state.copyWith(items: newItems);
+    final newState = TodoListModel(items: newItems);
 
-    await _repository.save(newState);
     state = newState;
+    await _repository.save(newState);
   }
 }

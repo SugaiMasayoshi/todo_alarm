@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:todo_alarm/ui/todo_item/todo_item.dart';
+import 'package:todo_alarm/ui/todo_item/top_todo_item.dart';
 import 'package:todo_alarm/ui/todo_list/todo_list_view_model.dart';
 
 class TodoList extends ConsumerWidget {
@@ -12,11 +13,20 @@ class TodoList extends ConsumerWidget {
       todoListViewModelProvider.select((state) => state.items),
     );
 
-    final todoIds = state.keys.toList();
-
     return ReorderableListView.builder(
       itemBuilder: (context, index) {
-        final todo = state[todoIds[index]]!;
+        final todo = state[index];
+
+        if (index == 0) {
+          return Column(
+            key: ValueKey(todo.id),
+            children: [
+              TopTodoItem(id: todo.id, index: index),
+              const Divider(height: 0),
+            ],
+          );
+        }
+
         return Column(
           key: ValueKey(todo.id),
           children: [
@@ -25,7 +35,7 @@ class TodoList extends ConsumerWidget {
           ],
         );
       },
-      itemCount: todoIds.length,
+      itemCount: state.length,
       onReorder: (int oldIndex, int newIndex) {
         ref
             .read(todoListViewModelProvider.notifier)

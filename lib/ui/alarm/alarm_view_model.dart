@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:todo_alarm/repositories/alarm_repository.dart';
-import 'package:todo_alarm/repositories/alarm_storage_repository.dart';
-import 'package:todo_alarm/repositories/models/alarm_config_model.dart';
+import 'package:todo_alarm/data/repositories/alarm_storage_repository.dart';
+import 'package:todo_alarm/domain/alarm/alarm_config.dart';
+import 'package:todo_alarm/data/services/interfaces/alarm_service.dart';
 
 part '../../generated/ui/alarm/alarm_view_model.g.dart';
 
 @riverpod
 class AlarmViewModel extends _$AlarmViewModel {
   @override
-  AlarmConfigModel build() {
-    final storageRepository = ref.watch(alarmStorageRepositoryProvider);
-    return storageRepository.load();
+  AlarmConfig build() {
+    final alarmStorage = ref.watch(alarmStorageRepositoryProvider);
+    return alarmStorage.load();
   }
 
   String get alarmTimeString {
@@ -21,14 +21,23 @@ class AlarmViewModel extends _$AlarmViewModel {
     return '$hour:$minute';
   }
 
-  Future<void> setAlarm(AlarmConfigModel config) async {
-    await ref.read(alarmRepositoryProvider).set(config.alarm);
-    await ref.read(alarmStorageRepositoryProvider).save(config);
+  Future<void> setAlarm(AlarmConfig config) async {
+    ref.read(alarmStorageRepositoryProvider);
+    ref.read(alarmServiceProvider).set(config);
+    final alarmStorage = ref.watch(alarmStorageRepositoryProvider);
+    alarmStorage.save(config);
     state = config;
   }
 
   Future<void> stopAlarm() async {
-    await ref.read(alarmRepositoryProvider).stop();
+    final nextConfig = await ref
+        .read(alarmServiceProvider)
+        .stopAndReschedule(state);
+
+    if (nextConfig != null) {
+      state = nextConfig;
+      await ref.read(alarmStorageRepositoryProvider).save(nextConfig);
+    }
   }
 
   Future<void> openTimePickerDialog(BuildContext context) async {
@@ -39,7 +48,13 @@ class AlarmViewModel extends _$AlarmViewModel {
 
     if (time != null) {
       final newAlarm = state.alarm.copyWith(
-        dateTime: DateTime.now().copyWith(hour: time.hour, minute: time.minute),
+        dateTime: DateTime.now().copyWith(
+          hour: time.hour,
+          minute: time.minute,
+          second: 0,
+          millisecond: 0,
+          microsecond: 0,
+        ),
       );
       await setAlarm(state.copyWith(alarm: newAlarm));
     }
