@@ -1,4 +1,4 @@
-package com.example.todo_alarm
+package sugai_masayoshi.todoalarm
 
 import io.flutter.embedding.android.FlutterActivity
 
